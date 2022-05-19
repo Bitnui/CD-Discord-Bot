@@ -2,6 +2,13 @@ import pandas as pd
 import discord 
 import os
 import time
+import requests
+def get_color_guide():
+    # Import color guide
+    url = "GOOGLE_DOCS_URL_HERE"
+    r = requests.get(url, allow_redirects=True)
+    open('Vital Csvs/color_guide.csv', 'wb').write(r.content)
+
 def clean_csv(columns,csv,final_name):
     # Pass Columns as a list
     # Pass CSV as 'Folder/Filename.csv'
@@ -172,6 +179,7 @@ async def on_message(message):
             time.sleep(.5)
             await message.channel.send(send_this[i])
     if msg.startswith('?'):
+        get_color_guide()
         send_this = discord_send_message(msg,'Vital Csvs/color_guide.csv')
         for i in range(len(send_this)):
             time.sleep(.5)
